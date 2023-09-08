@@ -13,6 +13,12 @@ gem "sprockets-rails"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 
+gem 'rexml'
+gem 'rspec-rails'
+gem 'brakeman'
+gem 'rubocop'
+
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 
