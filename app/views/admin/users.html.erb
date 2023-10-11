@@ -9,7 +9,7 @@
         <th scope="col">Last Name</th>
         <th scope="col">Email</th>
         <th scope="col">Role</th>
-        <%# <th scope="col">Edit User</th>> %>
+        <th scope="col">Edit User</th>
       </tr>
     </thead>
     <tbody>
@@ -20,7 +20,7 @@
           <td><%= user.email %></td>
           <td><%= user.role %></td>
           <%# Add user edit functionality later %>
-          <%# <td><%= link_to "Edit", edit_user_registration_path(user)  %>
+          <td><%= link_to "Edit", edit_user_registration_path(user)%> </td>
         </tr>
       <% end %>
     </tbody>
