@@ -1,0 +1,16 @@
+<%= link_to("Back to Inventory", items_path, class: 'back-link') %>
+
+<div class="items delete">
+  <h2>Delete Item</h2>
+
+  <%= form_for(@item, method: 'delete') do |f| %>
+
+    <p>Are you sure you want to permanently delete this item?</p>
+    <p><%= @item.name %></p>
+
+    <div class="form-buttons">
+      <%= f.submit("Delete Item") %>
+    </div>
+
+  <% end %>
+</div>

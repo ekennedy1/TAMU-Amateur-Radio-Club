@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>Item Details</h1>
+
+  <%= render @item %>
+  <strong>Description:</strong>
+  <%= @item.description %>
+
+  <div>
+    <%= link_to "Edit this item", edit_item_path(@item) %>
+    |
+    <%= link_to "Delete this item", delete_item_path(@item) %>
+    |
+    <%= link_to "Back to items", items_path %>
+  </div>
+</div>

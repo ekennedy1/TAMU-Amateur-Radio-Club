@@ -1,0 +1,23 @@
+<div class="container">
+  <h1 class="text-center">Admin Dashboard</h1>
+  <%= render "admin/nav_links" %>
+  <br>
+  <table class="table table-light table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Email</th>
+        <th scope="col">Serial Number</th>
+        <th scope="col">Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @transactions.each do |transaction| %>
+        <tr>
+          <th><%= transaction.email %></th>
+          <td><%= transaction.serial_number %></td>
+          <td><%= link_to "Edit", edit_transaction_path(transaction) %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

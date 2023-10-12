@@ -1,0 +1,11 @@
+<div class="container text-center">
+  <p>
+    <%# Get route and display to user %>
+    <%= link_to "Admin", admin_path %>
+    <%= " >  #{params[:action].capitalize}" unless params[:action].eql?("index") %>
+  </p>
+  <div class="btn-group">
+    <%= render "admin/link", resource: User %>
+    <%= render "admin/link", resource: Transaction %>
+  </div>
+</div>

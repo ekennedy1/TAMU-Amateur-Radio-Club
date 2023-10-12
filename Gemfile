@@ -56,6 +56,7 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'rspec-rails'
+  gem 'factory_bot_rails'
 end
 gem 'rexml'
 gem 'yaml_db'
@@ -78,3 +79,17 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+<<<<<<< HEAD
+=======
+
+gem 'yaml_db'
+
+gem 'brakeman'
+gem 'rubocop'
+gem 'erb-formatter'
+gem 'devise'
+gem 'rails-controller-testing'
+# Use Active Storage variant
+gem 'image_processing', '~> 1.2'
+gem 'mini_magick'
+>>>>>>> editTest
