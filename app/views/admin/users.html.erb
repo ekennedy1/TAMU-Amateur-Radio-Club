@@ -1,0 +1,28 @@
+<div class="container">
+  <h1 class="text-center">Admin Dashboard</h1>
+  <%= render "admin/nav_links" %>
+  <br>
+  <table class="table table-light table-striped">
+    <thead>
+      <tr>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Role</th>
+        <%# <th scope="col">Edit User</th>> %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <th><%= user.fname %></th>
+          <td><%= user.lname %></td>
+          <td><%= user.email %></td>
+          <td><%= user.role %></td>
+          <%# Add user edit functionality later %>
+          <%# <td><%= link_to "Edit", edit_user_registration_path(user)  %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

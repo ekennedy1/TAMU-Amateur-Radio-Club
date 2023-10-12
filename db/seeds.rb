@@ -6,10 +6,32 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Post.create!([
-  {title: "Test1", body: "WOW Cool\r\n", user_id: nil, views: nil, clicks: nil, last_reviewed_at: nil},
-  {title: "Test2", body: "Wow Cool2", user_id: nil, views: nil, clicks: nil, last_reviewed_at: nil},
-  {title: "Test3", body: "Wowwowowowo", user_id: nil, views: nil, clicks: nil, last_reviewed_at: nil},
-  {title: "Test4", body: "WOWOWOW", user_id: nil, views: nil, clicks: nil, last_reviewed_at: nil},
-  {title: "Test5", body: "cool wow", user_id: nil, views: nil, clicks: nil, last_reviewed_at: nil}
-])
+User.create!(
+  email: 'admin@gmail.com',
+  fname: 'Admin',
+  lname: 'Admin',
+  role: 'Admin',
+  password: '123456',
+  password_confirmation: '123456'
+)
+
+User.create!(
+  email: 'member@gmail.com',
+  fname: 'John',
+  lname: 'Doe',
+  role: 'Member',
+  password: '123456',
+  password_confirmation: '123456'
+)
+
+3.times do |x|
+  User.create!(email: "test#{x}@gmail.com", fname: 'Sean', lname: 'Lee', role: 'Member', password: '123456', password_confirmation: '123456')
+end
+
+3.times do |x|
+  Transaction.create!(email: "test#{x}@gmail.com", serial_number: "#{x}1#{x}2#{x}3")
+end
+
+10.times do |x|
+  Item.create!(name: "Item #{x}", serial_number: rand.to_s[2..11], description: "Description of item #{x}" , available: true)
+end

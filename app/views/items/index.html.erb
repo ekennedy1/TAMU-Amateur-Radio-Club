@@ -1,0 +1,17 @@
+<div class="container">
+  <h1>Inventory</h1>
+
+  <div id="items">
+    <% @items.each do |item| %>
+      <%= render item %>
+      <p>
+        <%= link_to "Show", item %>
+        <%= link_to "Edit", edit_item_path(item) %>
+        <%= link_to "Delete", delete_item_path(item) %>
+      </p>
+    <% end %>
+  </div>
+
+  <%= link_to "Add Item", new_item_path %>
+  <%= link_to "View Member Items", member_items_path %>
+</div>

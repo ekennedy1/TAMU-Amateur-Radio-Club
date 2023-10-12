@@ -72,6 +72,8 @@ group :development, :test do
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  gem 'factory_bot_rails'
+
 end
 
 group :development do
@@ -96,9 +98,9 @@ end
 gem 'yaml_db'
 
 gem 'brakeman'
-<<<<<<< Updated upstream
-=======
 gem 'devise'
 gem 'erb-formatter'
->>>>>>> Stashed changes
 gem 'rubocop'
+gem 'erb-formatter'
+gem 'devise'
+gem 'rails-controller-testing'
