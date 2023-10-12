@@ -17,12 +17,12 @@ RSpec.describe User, type: :model do
       user = User.new(fname: "John", lname: nil, email: "test@gmail.com", role: "Admin", password: '123456')
       expect(user).not_to be_valid
     end
-    
+
     it "is not valid without an email" do
       user = User.new(fname: "John", lname: "Doe", email: nil, role: "Admin", password: '123456')
       expect(user).not_to be_valid
     end
-    
+
     it "is not valid without a role" do
       user = User.new(fname: "John", lname: "Doe", email: "test@gmail.com", role: nil, password: '123456')
       expect(user).not_to be_valid
@@ -33,12 +33,12 @@ RSpec.describe User, type: :model do
       user = User.new(fname: "Jane", lname: "Doe", email: "test@gmail.com", role: "Member", password: '123456')
       expect(user).not_to be_valid
     end
-    
+
     it "is not valid without a password" do
       user = User.new(fname: "John", lname: "Doe", email: "test@gmail.com", role: "Admin", password: nil)
       expect(user).not_to be_valid
     end
-    
+
     it "is not valid with a short password" do
       user = User.new(fname: "John", lname: "Doe", email: "test@gmail.com", role: "Admin", password: '12345')
       expect(user).not_to be_valid
