@@ -3,11 +3,18 @@
     <h5 class="card-title"><%= item.name %></h5>
     <p class="card-text">
       <strong>Serial Number:</strong>
-      <%= item.serial_number %><br>
+      <%= item.serial_number %>
       <strong>Internal ID:</strong>
-      <%= item.id %><br>
-      <strong>Available?</strong>
-      <%= item.available ? 'Yes' : 'No' %>
+      <%= item.id %>
+      <% if item.available%>
+        <div class="available-pill available">
+          <strong>Available</strong>
+        </div>
+      <% else %>
+        <div class="available-pill unavailable">
+          <strong>Unavailable</strong>
+        </div>
+      <%end%>
     </p>
     <%# Display resized item image if attached, otherwise show placeholder. %>
     <% if item.image.attached? %>
