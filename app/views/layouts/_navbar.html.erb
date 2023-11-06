@@ -14,9 +14,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <%# <li class="nav-item">
-          <%= link_to "Home", root_path, class: "nav-link" %>
-        <%# </li> %>
+        <!-- The Home link has been commented out -->
         <% if current_user %>
           <% if current_user.admin? %>
             <li class="nav-item">
@@ -32,8 +30,8 @@
         </li>
         <li class="nav-item">
             <%= link_to "Transactions", transactions_path, class: 'nav-link' %>
-       </li>
-       <% if current_user && current_user.role == 'Admin' %>
+        </li>
+        <% if current_user&.admin? %> <!-- Here we use the admin? method provided by the enum -->
           <li class="nav-item">
             <%= link_to "Admin Dashboard", admin_path, class: "nav-link" %>
           </li>

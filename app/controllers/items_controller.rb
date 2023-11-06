@@ -30,12 +30,12 @@ class ItemsController < ApplicationController
 
     # If there are existing items, set the new item ID to the next number.
     # Otherwise, set the ID to 1 for the first item.
-    if Item.count != 0
-      count = Item.last.id + 1
-      @item.id = count
-    else
-      @item.id = 1
-    end
+    # if Item.count != 0
+    #   count = Item.last.id + 1
+    #   @item.id = count
+    # else
+    #   @item.id = 1
+    # end
 
     # Save the new item and redirect or render errors as necessary
     respond_to do |format|
@@ -52,6 +52,17 @@ class ItemsController < ApplicationController
 
   # Update an item's details
   def update
+    @item = Item.find(params[:id])
+
+    respond_to do |format|
+      if @item.update(item_params)
+        format.html { redirect_to item_url(@item), notice: "Item was successfully updated." }
+        format.json { render :show, status: :ok, location: @item }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @item.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
 
@@ -66,7 +77,7 @@ class ItemsController < ApplicationController
     @item.destroy
 
     respond_to do |format|
-      format.html { redirect_to items_url, notice: "Item was successfully removed." }
+      format.html { redirect_to admin_items_path, notice: "Item was successfully removed." }
       format.json { head :no_content }
     end
   end
@@ -116,7 +127,7 @@ class ItemsController < ApplicationController
                                  else
                                    false # Default value when it's not explicitly true.
                                  end
-        
+
         item = Item.find_or_create_by(id: item_hash["id"])
         item.update!(item_hash)
       end

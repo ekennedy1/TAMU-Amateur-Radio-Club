@@ -5,10 +5,20 @@ Rails.application.routes.draw do
   # if user is not an admin, going to /admins will give 404 error
   authenticated :user, -> (user) { user.admin? } do
     get 'admin', to: 'admin#index'
-    get 'admin/users'
-    get 'admin/transactions'
-    patch 'admin/users/:id', to: 'admin#update', as: 'admin/user'
+    get 'admin/transactions', to: 'admin#transactions', as: 'admin_transactions'
+    patch 'admin/users/:id', to: 'admin#update', as: 'admin_user_update'
+    get 'admin/users', to: 'admin#users', as: 'admin_users'
     get 'items/index', as: :admin_items
+    get 'admin/users', to: 'admin#users', as: :users
+    post 'admin/users', to: 'admin#create', as: :create_user
+    patch 'admin/users/:id', to: 'admin#update', as: :user
+  end
+
+  namespace :admin do
+    get '/', to: 'admin#index', as: 'admin_root'
+    resources :users, except: [:destroy] do
+      patch :update, on: :member
+    end
   end
 
   devise_for :users, controllers: {
@@ -19,6 +29,7 @@ Rails.application.routes.draw do
 
   # root to: "items#index"
   root to: 'items#member_items'
+
 
   put 'items/:id/checkout', to: 'items#checkout', as: 'checkout_item'
 

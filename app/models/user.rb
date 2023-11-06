@@ -1,17 +1,13 @@
 class User < ApplicationRecord
   # Including default modules provided by Devise for authentication.
-  # Other available modules include :confirmable, :lockable, :timeoutable, and :trackable.
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
-  # Validating presence of first name, last name, and role for each user.
-  validates :fname, :lname, :role, presence: true
+  enum role: { member: 0, admin: 1 }
 
-  # Check if the user has the role 'Admin'.
-  def admin?
-    role == 'Admin'
-  end
+  # Validating presence of first name and last name for each user.
+  validates :fname, :lname, presence: true
 
   # Create or find a user based on Google's OAuth2 response.
   def self.from_google(email:, full_name:, uid:)
@@ -26,6 +22,6 @@ class User < ApplicationRecord
     password = Devise.friendly_token[0, 20]
 
     # Use the split names in your creation logic.
-    create_with(uid: uid, fname: first_name, lname: last_name, email: email, password: password, role: 'Member').find_or_create_by!(email: email)
+    create_with(uid: uid, fname: first_name, lname: last_name, email: email, password: password, role: :member).find_or_create_by!(email: email)
   end
 end

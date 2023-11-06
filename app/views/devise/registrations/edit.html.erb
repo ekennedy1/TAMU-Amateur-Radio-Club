@@ -16,7 +16,12 @@
     </div>
 
     <%# ADD ROLE FIELD HERE LATER %>
-
+    <% if current_user.admin? %>
+    <div class="field">
+      <%= f.label :role %><br/>
+      <%= f.select :role, options_for_select(['Admin','Member'], f.object.role) %>
+    </div>
+    <% end %>
     <div class="field">
       <%= f.label :email, "Email" %><br/>
       <%= f.email_field :email, autocomplete: "email" %>
