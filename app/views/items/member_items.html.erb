@@ -3,8 +3,7 @@
   <h1>Member - Inventory</h1>
 
   <% @items.each_with_index do |item, index| %>
-    <p><%= index + 1 %>.
-      <%= item.name %></p>
+    <%= render item %>
   <% end %>
 
   <%= link_to "View inventory", items_path %>

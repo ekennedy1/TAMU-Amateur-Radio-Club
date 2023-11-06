@@ -1,27 +1,21 @@
 <div id="<%= dom_id item %>" class="card mt-3">
   <div class="card-body">
     <h5 class="card-title"><%= item.name %></h5>
+    <% if item.available%>
+      <div class="available-pill available">
+        <strong>Available</strong>
+      </div>
+    <% else %>
+      <div class="available-pill unavailable">
+        <strong>Unavailable</strong>
+      </div>
+    <%end%>
     <p class="card-text">
       <strong>Serial Number:</strong>
       <%= item.serial_number %>
       <strong>Internal ID:</strong>
       <%= item.id %>
-      <% if item.available%>
-        <div class="available-pill available">
-          <strong>Available</strong>
-        </div>
-      <% else %>
-        <div class="available-pill unavailable">
-          <strong>Unavailable</strong>
-        </div>
-      <%end%>
     </p>
     <%# Display resized item image if attached, otherwise show placeholder. %>
-    <% if item.image.attached? %>
-      <%= image_tag item.image, class: "card-img-bottom mb-3" %>
-    <% else %>
-      <%# Placeholder image for testing purposes %>
-      <%= image_tag "placeholderRadio.png", size: "25x", class: "mx-auto d-block" %>
-    <% end %>
   </div>
 </div>
