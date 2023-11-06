@@ -2,7 +2,10 @@ class ItemsController < ApplicationController
 
   # Display all items
   def index
-    @items = Item.all
+    #Search Functionality
+    #If search is empty, return all items
+    #Else, return items that contain the search string
+    @items = Item.search(params[:search])
   end
 
   # Show details of a specific item
@@ -17,6 +20,7 @@ class ItemsController < ApplicationController
 
   # Form for editing an item
   def edit
+    @item = Item.find(params[:id])
   end
 
   # Create a new item record
@@ -49,7 +53,7 @@ class ItemsController < ApplicationController
   # Update an item's details
   def update
   end
-  
+
 
   # Confirm deletion of an item
   def delete
@@ -69,12 +73,13 @@ class ItemsController < ApplicationController
 
   def checkout
     @item = Item.find(params[:id])
-  
+
     if @item.available
       # Mark the item as unavailable
       @item.update_attribute(:available, false)
-  
+
       # Create a new Transaction entry with the item's serial_number
+
       Transaction.create!(email: current_user.email, serial_number: @item.serial_number, approved: false)
       
       redirect_to items_path, notice: "Item checked out and transaction created."
@@ -85,7 +90,10 @@ class ItemsController < ApplicationController
 
   # Display all items that are available
   def member_items
-    @items = Item.where(available: true)
+    #Search Functionality
+    #If search is empty, return all items with available set to True (This is the case for member inventory)
+    #Otherwise, only return items that contains the search string and is available
+    @items = Item.search(params[:search]).where(available: true)
   end
 
   def export
@@ -106,22 +114,22 @@ class ItemsController < ApplicationController
         item_hash["available"] = case item_hash["available"].downcase.strip
                                  when 'true', 't', '1'
                                    true
-                                 else 
+                                 else
                                    false # Default value when it's not explicitly true.
                                  end
         
-        item = Item.find_or_initialize_by(id: item_hash["id"])
+        item = Item.find_or_create_by(id: item_hash["id"])
         item.update!(item_hash)
       end
-  
+
       redirect_to items_path, notice: "Items imported successfully!"
     else
       redirect_to items_path, alert: "Please upload a CSV file."
     end
   rescue ActiveRecord::RecordInvalid => e
     redirect_to items_path, alert: "There was an issue with importing items. Error: #{e.message}"
-  end   
-  
+  end
+
   private
 
     # Strong parameters for item to prevent mass-assignment vulnerabilities
