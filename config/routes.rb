@@ -39,7 +39,9 @@ Rails.application.routes.draw do
     member do
       get :delete
       put 'approve'
+      put 'check_in'
       get 'approve'
+      get 'check_in'
     end
   end
 
