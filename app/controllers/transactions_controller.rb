@@ -49,7 +49,15 @@ class TransactionsController < ApplicationController
   
     def destroy
       @transaction = Transaction.find(params[:id])
-      @transaction.destroy
+      @item = Item.find_by(serial_number: @transaction.serial_number) # assuming serial_number is the unique identifier for the item
+      
+      @item.available = true
+      if @item.save
+        @transaction.destroy
+        redirect_to transactions_path, notice: "Item was successfully checked in and transaction was removed."
+      else 
+        @transaction.destroy
+      end
   
       respond_to do |format|
         format.html { redirect_to transactions_url, notice: "Transaction was successfully removed." }
