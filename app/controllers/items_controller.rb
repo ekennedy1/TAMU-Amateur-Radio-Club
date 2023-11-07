@@ -79,8 +79,9 @@ class ItemsController < ApplicationController
       @item.update_attribute(:available, false)
 
       # Create a new Transaction entry with the item's serial_number
-      Transaction.create(email: current_user.email, serial_number: @item.serial_number)
 
+      Transaction.create!(email: current_user.email, serial_number: @item.serial_number, approved: false)
+      
       redirect_to items_path, notice: "Item checked out and transaction created."
     else
       redirect_to items_path, alert: "Item is already checked out."
