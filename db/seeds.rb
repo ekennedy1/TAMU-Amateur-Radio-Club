@@ -12,7 +12,8 @@ User.create!(
   lname: 'Admin',
   role: 'Admin',
   password: '123456',
-  password_confirmation: '123456'
+  password_confirmation: '123456',
+  callsign: 'AE5ID' # Example callsign for Admin
 )
 
 User.create!(
@@ -21,11 +22,21 @@ User.create!(
   lname: 'Doe',
   role: 'Member',
   password: '123456',
-  password_confirmation: '123456'
+  password_confirmation: '123456',
+  callsign: 'KL4LJ' # Example callsign for Member
 )
 
+callsigns = ['KI5YBE', 'KT5KMF', 'WG1GEM'] # An array of example callsigns
 3.times do |x|
-  User.create!(email: "test#{x}@gmail.com", fname: 'Sean', lname: 'Lee', role: 'Member', password: '123456', password_confirmation: '123456')
+  User.create!(
+    email: "test#{x}@gmail.com",
+    fname: 'Sean',
+    lname: 'Lee',
+    role: 'Member',
+    password: '123456',
+    password_confirmation: '123456',
+    callsign: callsigns[x] # Assign a callsign from the array
+  )
 end
 
 # 3.times do |x|

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'pages/help'
   get 'users/index'
 
   resources :maintenance_items
@@ -8,6 +9,7 @@ Rails.application.routes.draw do
     get 'admin/users'
     get 'admin/transactions'
     patch 'admin/users/:id', to: 'admin#update', as: 'admin/user'
+    get 'items/index', as: :admin_items
   end
 
   devise_for :users, controllers: {
@@ -16,14 +18,15 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
-  root to: "items#index"
+  # root to: "items#index"
+  root to: 'items#member_items'
 
   put 'items/:id/checkout', to: 'items#checkout', as: 'checkout_item'
 
   get '/items/export', to:'items#export'
   post 'items/import', to: 'items#import', as: 'import_items'
 
-  resources :items do
+  resources :items, except: [:index] do
     member do
       get :delete
       put 'checkout'
@@ -38,13 +41,13 @@ Rails.application.routes.draw do
     member do
       get :delete
       put 'approve'
+      put 'check_in'
       get 'approve'
+      get 'check_in'
     end
   end
 
   get 'member-items', to: 'items#member_items'
   get 'transactions', to: 'transactions#index'
-
-  #post 'button_action2/:id', to: 'transactions#button_action2'
-  #get 'button_action', to: 'items#index'
+  get 'help', to: 'pages#help', as: 'help'
 end

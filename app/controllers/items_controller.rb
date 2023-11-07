@@ -2,7 +2,10 @@ class ItemsController < ApplicationController
 
   # Display all items
   def index
-    @items = Item.all
+    #Search Functionality
+    #If search is empty, return all items
+    #Else, return items that contain the search string
+    @items = Item.search(params[:search])
   end
 
   # Show details of a specific item
@@ -76,17 +79,21 @@ class ItemsController < ApplicationController
       @item.update_attribute(:available, false)
 
       # Create a new Transaction entry with the item's serial_number
-      Transaction.create(email: current_user.email, serial_number: @item.serial_number)
 
-      redirect_to items_path, notice: "Item checked out and transaction created."
+      Transaction.create!(email: current_user.email, serial_number: @item.serial_number, approved: false)
+      
+      redirect_to member_items_path, notice: "Item checked out and transaction created."
     else
-      redirect_to items_path, alert: "Item is already checked out."
+      redirect_to member_items_path, alert: "Item is already checked out."
     end
   end
 
   # Display all items that are available
   def member_items
-    @items = Item.where(available: true)
+    #Search Functionality
+    #If search is empty, return all items with available set to True (This is the case for member inventory)
+    #Otherwise, only return items that contains the search string and is available
+    @items = Item.search(params[:search]).where(available: true)
   end
 
   def export
@@ -110,17 +117,17 @@ class ItemsController < ApplicationController
                                  else
                                    false # Default value when it's not explicitly true.
                                  end
-
-        item = Item.find_or_initialize_by(id: item_hash["id"])
+        
+        item = Item.find_or_create_by(id: item_hash["id"])
         item.update!(item_hash)
       end
 
-      redirect_to items_path, notice: "Items imported successfully!"
+      redirect_to admin_items_path, notice: "Items imported successfully!"
     else
-      redirect_to items_path, alert: "Please upload a CSV file."
+      redirect_to admin_items_path, alert: "Please upload a CSV file."
     end
   rescue ActiveRecord::RecordInvalid => e
-    redirect_to items_path, alert: "There was an issue with importing items. Error: #{e.message}"
+    redirect_to admin_items_path, alert: "There was an issue with importing items. Error: #{e.message}"
   end
 
   private
