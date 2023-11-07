@@ -7,12 +7,7 @@
       <tr>
         <th scope="col">Email</th>
         <th scope="col">Serial Number</th>
-        <th scope="col">Approved</th>
-        <th scope="col">Checked Out At</th>
-        <th scope="col">Approved At</th>
-        <th scope="col">Approve?</th>
-        <th scope="col">Check In</th>
-        <th scope="col">Delete</th>
+        <th scope="col">Edit</th>
       </tr>
     </thead>
     <tbody>
@@ -20,12 +15,7 @@
         <tr>
           <th><%= transaction.email %></th>
           <td><%= transaction.serial_number %></td>
-          <td><%= transaction.approved ? 'Yes' : 'No' %></td>
-          <td><%= transaction.created_at %></td>
-          <td><%= transaction.updated_at %></td>
-          <td><%= link_to 'Approve', approve_transaction_path(transaction), method: :put, class: "button" %></td>
-          <td><%= link_to 'Check_in', check_in_transaction_path(transaction), method: :put, class: "button" %></td>
-          <td><%= link_to "Delete", delete_transaction_path(transaction) %>
+          <td><%= link_to "Edit", edit_transaction_path(transaction) %>
         </tr>
       <% end %>
     </tbody>

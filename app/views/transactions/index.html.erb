@@ -5,17 +5,10 @@
     <% @transactions.each do |transaction| %>
       <%= render transaction %>
       <p>
-        Email: <%= transaction.email %><br>
-        Serial Number: <%= transaction.serial_number %><br>
-        Approved: <%= transaction.approved ? 'Yes' : 'No' %><br>
-        Checked Out at: <%= transaction.created_at %><br>
-        Approved at: <%= transaction.updated_at %><br>
-
         <%= link_to "Show", transaction %>
         <%= link_to "Edit", edit_transaction_path(transaction) %>
         <%= link_to "Delete", delete_transaction_path(transaction) %>
         <%= link_to 'Approve', approve_transaction_path(transaction), method: :put, class: "button" %>
-        <%= link_to 'Check_in', check_in_transaction_path(transaction), method: :put, class: "button" %>
       </p>
     <% end %>
   </div>
