@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'pages/help'
   get 'users/index'
 
   resources :maintenance_items
@@ -46,4 +47,5 @@ Rails.application.routes.draw do
 
   get 'member-items', to: 'items#member_items'
   get 'transactions', to: 'transactions#index'
+  get 'help', to: 'pages#help', as: 'help'
 end
