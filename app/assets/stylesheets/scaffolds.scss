@@ -18,7 +18,7 @@ a {
   padding: 2px 2px;
 }
 
-a:not(.nav-link):hover{
+a:not(.nav-link):not(.btn):hover{
   color:#000;
   background-color: lightgray;
   border-radius: 6px;
@@ -37,23 +37,6 @@ a:not(.nav-link):hover{
   color: white;
   background-color: #6c0c0c; 
   border-radius: 6px;
-}
-
-.available-pill {
-  border-width: 2px;
-  border-style: solid;
-  border-radius: 10px;
-  width: fit-content;
-  padding: 0 5px;
-  float: right;
-}
-.available-pill.available {
-  background-color:lightgreen;
-  border-color: rgb(63, 211, 63);
-}
-.available-pill.unavailable {
-  background-color:rgb(245, 81, 81);
-  border-color: red;
 }
 
 th {
