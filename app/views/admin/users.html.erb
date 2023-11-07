@@ -2,6 +2,13 @@
   <h1 class="text-center">Admin Dashboard</h1>
   <%= render "admin/nav_links" %>
   <br>
+  <button type="button" class="btn btn-primary mb-4" data-bs-toggle="collapse" data-bs-target="#newUserForm">
+    Create a New User
+  </button>
+  <div class="collapse" id="newUserForm">
+    <%= render 'create_form', user: User.new %>
+  </div>
+
   <table class="table table-light table-striped">
     <thead>
       <tr>
@@ -15,7 +22,7 @@
     <tbody>
       <% @users.each do |user| %>
         <tr>
-          <th><%= user.fname %></th>
+          <td><%= user.fname %></td>
           <td><%= user.lname %></td>
           <td><%= user.email %></td>
           <td><%= user.role %></td>
