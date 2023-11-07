@@ -3,6 +3,44 @@ require 'rails_helper'
 RSpec.describe ItemsController, type: :controller do
   render_views
 
+  let(:user) do
+    User.create!(
+      fname: 'First',
+      lname: 'Last',
+      email: 'test@gmail.com',
+      password: 'password123',
+      role: 'member'
+    )
+  end
+
+  let(:admin) do
+    User.create!(
+      fname: 'First',
+      lname: 'Last',
+      email: 'admin@gmail.com',
+      password: 'password123',
+      role: 'admin'
+    )
+  end
+
+  before(:each) do
+    sign_in user
+  end
+
+  before do
+    allow_any_instance_of(ActionView::Base).to receive(:image_tag).and_return('Image')
+  end
+
+  describe "GET #member_items" do
+    it "assigns all available items to @items and renders the member_items template" do
+      item = Item.create!(name: "Test Item", serial_number: "12345", description: "Test Description", available: true)
+      get :member_items
+      expect(assigns(:items)).to match_array([item])
+      expect(response).to render_template(:member_items)
+    end
+  end
+
+
   describe "GET #index" do
 
     it "assigns all items to @items and renders the index template" do
@@ -35,7 +73,7 @@ RSpec.describe ItemsController, type: :controller do
       end
     end
   end
-  
+
   #Testing search functionality on member inventory page
   describe "Get #member_items" do
 
@@ -72,7 +110,7 @@ RSpec.describe ItemsController, type: :controller do
       expect(response).to render_template(:show)
     end
   end
-  
+
   describe "GET #new" do
     it "assigns a new item to @item and renders the new template" do
       get :new
@@ -80,7 +118,7 @@ RSpec.describe ItemsController, type: :controller do
       expect(response).to render_template(:new)
     end
   end
-  
+
   describe "POST #create" do
     context "with valid attributes" do
       it "creates a new item and redirects to the item's page with a notice" do
@@ -121,7 +159,7 @@ RSpec.describe ItemsController, type: :controller do
       expect(flash[:notice]).to eq("Item was successfully removed.")
     end
   end
-  
+
   #tests for import / export csv function
 
   #testing export function
@@ -143,50 +181,53 @@ RSpec.describe ItemsController, type: :controller do
   end
 
   #testing import function
-  describe "POST #import" do
-    let (:csv_file) { fixture_file_upload('items.csv', 'text/csv') }
-
-    it "import items" do
-      #delete all items in the database
-      Item.transaction do
-        Item.delete_all
-
-        expect { post :import, params: {file: csv_file } }.to change(Item, :count).by(1)
-
-        expect(response).to redirect_to(items_path)
-        expect(flash[:notice]).to eq("Items imported successfully!")
-        # expect { post :import, params: {file: csv_file } }.to change(Item, :count).by(1)
-        expect(Item.first.name).to eq("Testing Item")
-        expect(Item.first.description).to eq("Testing Description")
-        expect(Item.first.serial_number).to eq("123456")
-        expect(Item.first.available).to eq(true)
-        #revert the deletion and addition of testing file
-        raise ActiveRecord::Rollback
-      end
+  context "as an admin user" do
+    before(:each) do
+      sign_in admin
     end
+    describe "POST #import" do
+      let (:csv_file) { fixture_file_upload('items.csv', 'text/csv') }
 
-    context "when csv file is missing" do
-      it "gives an error" do
-        post :import
+      it "import items" do
+        #delete all items in the database
+        Item.transaction do
+          Item.delete_all
 
-        expect(response).to redirect_to(items_path)
-        expect(flash[:alert]).to eq("Please upload a CSV file.")
+          expect { post :import, params: {file: csv_file } }.to change(Item, :count).by(1)
+
+          expect(response).to redirect_to(admin_items_path)
+          expect(flash[:notice]).to eq("Items imported successfully!")
+          # expect { post :import, params: {file: csv_file } }.to change(Item, :count).by(1)
+          expect(Item.first.name).to eq("Testing Item")
+          expect(Item.first.description).to eq("Testing Description")
+          expect(Item.first.serial_number).to eq("123456")
+          expect(Item.first.available).to eq(true)
+          #revert the deletion and addition of testing file
+          raise ActiveRecord::Rollback
+        end
       end
-    end
 
-    context "when csv file is missing columns" do
-      let(:csv_file) { fixture_file_upload("invalid_items.csv", "test/csv") }
+      context "when csv file is missing" do
+        it "gives an error" do
+          post :import
 
-      it "fails to import items and gives an error" do
-        post :import, params: { file: csv_file}
+          expect(response).to redirect_to(admin_items_path)
+          expect(flash[:alert]).to eq("Please upload a CSV file.")
+        end
+      end
 
-        expect(response).to redirect_to(items_path)
-        expect(flash[:alert]).to start_with("There was an issue with importing items.")
-        expect { post :import, params: { file: csv_file } }.not_to change(Item, :count)
+      context "when csv file is missing columns" do
+        let(:csv_file) { fixture_file_upload("invalid_items.csv", "test/csv") }
+
+        it "fails to import items and gives an error" do
+          post :import, params: { file: csv_file}
+
+          expect(response).to redirect_to(admin_items_path)
+          expect(flash[:alert]).to start_with("There was an issue with importing items.")
+          expect { post :import, params: { file: csv_file } }.not_to change(Item, :count)
+        end
       end
     end
   end
-
-
   #  write tests for edit
 end
