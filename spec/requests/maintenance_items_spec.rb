@@ -13,7 +13,23 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/maintenance_items", type: :request do
-  
+  include Devise::Test::IntegrationHelpers
+
+  let(:admin) do
+    User.create!(
+      fname: 'First',
+      lname: 'Last',
+      email: 'admin@gmail.com',
+      password: 'password123',
+      role: 'admin'
+    )
+  end
+
+  before(:each) do
+    sign_in admin
+  end
+
+
   # This should return the minimal set of attributes required to create a valid
   # MaintenanceItem. As you add validations to MaintenanceItem, be sure to
   # adjust the attributes here as well.
@@ -77,12 +93,12 @@ RSpec.describe "/maintenance_items", type: :request do
         }.to change(MaintenanceItem, :count).by(0)
       end
 
-    
+
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
         post maintenance_items_url, params: { maintenance_item: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
+
     end
   end
 
@@ -108,13 +124,13 @@ RSpec.describe "/maintenance_items", type: :request do
     end
 
     context "with invalid parameters" do
-    
+
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         maintenance_item = MaintenanceItem.create! valid_attributes
         patch maintenance_item_url(maintenance_item), params: { maintenance_item: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
+
     end
   end
 
