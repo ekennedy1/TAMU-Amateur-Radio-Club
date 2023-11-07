@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Users", type: :request do
+RSpec.describe 'Users', type: :request do
   include Devise::Test::IntegrationHelpers
 
   let(:admin) do
@@ -17,18 +19,17 @@ RSpec.describe "Users", type: :request do
     sign_in admin
   end
 
-  describe "GET /index" do
-    it "returns http success" do
-      get "/users/index"
+  describe 'GET /index' do
+    it 'returns http success' do
+      get '/users/index'
       expect(response).to have_http_status(:success)
     end
   end
 
-  describe "GET /edit" do
-    it "returns http success" do
-      get "/users/edit"
+  describe 'GET /edit' do
+    it 'returns http success' do
+      get '/users/edit'
       expect(response).to have_http_status(:success)
     end
   end
-
 end

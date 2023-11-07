@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Including default modules provided by Devise for authentication.
   # Other available modules include :confirmable, :lockable, :timeoutable, and :trackable.
@@ -26,6 +28,7 @@ class User < ApplicationRecord
     password = Devise.friendly_token[0, 20]
 
     # Use the split names in your creation logic.
-    create_with(uid: uid, fname: first_name, lname: last_name, email: email, password: password, role: 'Member').find_or_create_by!(email: email)
+    create_with(uid:, fname: first_name, lname: last_name, email:, password:,
+                role: 'Member').find_or_create_by!(email:)
   end
 end
