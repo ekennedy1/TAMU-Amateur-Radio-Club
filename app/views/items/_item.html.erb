@@ -1,21 +1,47 @@
-<div id="<%= dom_id item %>" class="card mt-3">
-  <div class="card-body">
-    <h5 class="card-title"><%= item.name %></h5>
-    <% if item.available%>
-      <div class="available-pill available">
-        <strong>Available</strong>
-      </div>
-    <% else %>
-      <div class="available-pill unavailable">
-        <strong>Unavailable</strong>
-      </div>
-    <%end%>
-    <p class="card-text">
-      <strong>Serial Number:</strong>
-      <%= item.serial_number %>
-      <strong>Internal ID:</strong>
-      <%= item.id %>
-    </p>
-    <%# Display resized item image if attached, otherwise show placeholder. %>
-  </div>
+<div id="<%= dom_id item %>" class="card">
+    <div class="card-header">
+        <%= item.name %>
+    </div>
+    <div class="card-body">
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th colspan="2"><%= item.name %></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Serial Number</strong></td>
+                <td><%= item.serial_number %></td>
+            </tr>
+            <% if current_user.admin? %>
+                <tr>
+                    <td><strong>Internal ID</strong></td>
+                    <td><%= item.id %></td>
+                </tr>
+                <tr>
+                    <td><strong>Available?</strong></td>
+                    <td><%= item.available ? 'Yes' : 'No' %></td>
+                </tr>
+            <% end %>
+            <tr>
+                <td colspan="2">
+                    <% if item.image.attached? %>
+                        <%= image_tag item.image, class: "img-fluid mx-auto d-block" %>
+                    <% else %>
+                        <%# Placeholder image for testing purposes %>
+                        <%= image_tag "placeholderRadio.png", size: "25x", class: "mx-auto d-block" %>
+                    <% end %>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    <div class="card-footer text-center">
+        <% if current_user.admin? %>
+            <%= link_to "Edit", edit_item_path(item), class: "btn btn-info btn-sm" %>
+            <%= link_to "Delete", delete_item_path(item), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %>
+        <% end %>
+        <%= link_to 'Checkout', checkout_item_path(item), method: :put, class: "btn btn-success btn-sm" %>
+    </div>
 </div>

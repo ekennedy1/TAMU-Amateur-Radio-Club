@@ -88,6 +88,8 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
   gem 'simplecov', :require => false
+  gem 'webmock'
+  gem 'omniauth-google-oauth2'
 end
 
 gem 'yaml_db'
@@ -96,7 +98,10 @@ gem 'brakeman'
 gem 'rubocop'
 gem 'erb-formatter'
 gem 'devise'
+gem 'omniauth', '~>1.9.1'
+gem 'omniauth-google-oauth2'
 gem 'rails-controller-testing'
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'
 gem 'mini_magick'
+gem 'jquery-rails'

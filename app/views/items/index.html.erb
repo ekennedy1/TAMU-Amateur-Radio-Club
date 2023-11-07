@@ -1,26 +1,53 @@
-<div class="container">
-  <h1>Inventory</h1>
-  <%= link_to "Add Item", new_item_path %>
-  <%= link_to "View Member Items", member_items_path %>
-  <div id="items">
-    <% @items.each do |item| %>
-      <%= render item %>
-      <p>
-        <%= link_to "Show", item %>
-        <%= link_to "Edit", edit_item_path(item) %>
-        <%= link_to "Delete", delete_item_path(item) %>
-        <%= link_to 'Checkout', checkout_item_path(item), method: :put, class: "button" %>
-        
-        <!--#<%= button_to "Checkout", "button_action", method: :post, class: "btn" %>-->
-      </p>
-    <% end %>
+<div class="container mt-4">
+  <h1 class="mb-4">Inventory</h1>
+
+  <%# Testing google oauth %>
+  <div id="loggedInAlert" class="alert alert-info mb-4" role="alert">
+    <p>You're logged in! Welcome to the Admin Item Dashboard!</p>
+    <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-warning text-white" %>
   </div>
-  
-  <%= link_to "Add Item", new_item_path %>
-  <%= link_to "View Member Items", member_items_path %>
-  <%= link_to 'Export Items', items_export_path, class: "button" %>
-  <%= form_tag import_items_path, multipart: true do %>
-    <%= file_field_tag :file %>
-    <%= submit_tag "Import" %>
+
+  <!-- Search functionality -->
+
+  <div class="d-flex mb-4">
+    <%= link_to "Add Item", new_item_path, class: "btn btn-primary me-2 text-white" %>
+    <%= link_to "View Member Items", member_items_path, class: "btn btn-secondary text-white" %>
+  </div>
+
+  <%= form_tag import_items_path, multipart: true, class: "mb-4" do %>
+    <div class="mb-3">
+      <%= file_field_tag :file, class: "form-control" %>
+    </div>
+    <%= submit_tag "Import", class: "btn btn-success me-2 text-white" %>
+    <%= link_to 'Export Items', items_export_path, class: "btn btn-info text-white" %>
   <% end %>
+
+ <table id="inventory-table" class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <% if current_user.admin? %>
+          <th>Serial Number</th>
+          <th>Internal ID</th>
+          <th>Available?</th>
+        <% end %>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @items.each do |item| %>
+        <tr id="<%= dom_id(item) %>">
+          <td><%= item.name %></td>
+            <td><%= item.serial_number %></td>
+            <td><%= item.id %></td>
+            <td><%= item.available ? 'Yes' : 'No' %></td>
+          <td>
+            <%= link_to "Edit", edit_item_path(item), class: "btn btn-info btn-sm text-white" %>
+            <%= link_to "Delete", item_path(item), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm text-white" %>
+            <%= link_to 'Checkout', checkout_item_path(item), method: :put, class: "btn btn-success btn-sm text-white" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

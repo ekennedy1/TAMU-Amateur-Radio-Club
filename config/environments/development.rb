@@ -68,6 +68,8 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+  ENV['GOOGLE_OAUTH_CLIENT_ID'] = Rails.application.credentials.google_oauth[:client_id]
+  ENV['GOOGLE_OAUTH_CLIENT_SECRET'] = Rails.application.credentials.google_oauth[:client_secret]
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.perform_deliveries = true
