@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class MaintenanceItemsController < ApplicationController
-  before_action :set_maintenance_item, only: %i[ show edit update destroy ]
+  before_action :set_maintenance_item, only: %i[show edit update destroy]
 
   # GET /maintenance_items or /maintenance_items.json
   def index
@@ -27,7 +29,9 @@ class MaintenanceItemsController < ApplicationController
 
     respond_to do |format|
       if @maintenance_item.save
-        format.html { redirect_to maintenance_item_url(@maintenance_item), notice: "Maintenance item was successfully created." }
+        format.html do
+          redirect_to maintenance_item_url(@maintenance_item), notice: 'Maintenance item was successfully created.'
+        end
         format.json { render :show, status: :created, location: @maintenance_item }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +44,9 @@ class MaintenanceItemsController < ApplicationController
   def update
     respond_to do |format|
       if @maintenance_item.update(maintenance_item_params)
-        format.html { redirect_to maintenance_item_url(@maintenance_item), notice: "Maintenance item was successfully updated." }
+        format.html do
+          redirect_to maintenance_item_url(@maintenance_item), notice: 'Maintenance item was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @maintenance_item }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,19 +60,20 @@ class MaintenanceItemsController < ApplicationController
     @maintenance_item.destroy
 
     respond_to do |format|
-      format.html { redirect_to maintenance_items_url, notice: "Maintenance item was successfully destroyed." }
+      format.html { redirect_to maintenance_items_url, notice: 'Maintenance item was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_maintenance_item
-      @maintenance_item = MaintenanceItem.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def maintenance_item_params
-      params.require(:maintenance_item).permit(:item_name, :description, :total_amount, :available_amount)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_maintenance_item
+    @maintenance_item = MaintenanceItem.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def maintenance_item_params
+    params.require(:maintenance_item).permit(:item_name, :description, :total_amount, :available_amount)
+  end
 end

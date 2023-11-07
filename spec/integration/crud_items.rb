@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "CRUD_Item_integration_tests", type: :system do
+RSpec.describe 'CRUD_Item_integration_tests', type: :system do
   before do
     driven_by(:rack_test)
   end
 
   it 'enables the user to create an item and displays it' do
     visit root_path
-    click_on "Add Item"
+    click_on 'Add Item'
 
     fill_in 'Name', with: 'Laptop'
     fill_in 'Description', with: 'A very cool laptop'
@@ -20,7 +22,7 @@ RSpec.describe "CRUD_Item_integration_tests", type: :system do
     expect(page).to have_content('A very cool laptop')
     expect(page).to have_content('9393493')
 
-    item = Item.order("id").last
+    item = Item.order('id').last
     expect(item.name).to eq('Laptop')
     expect(item.description).to eq('A very cool laptop')
     expect(item.serial_number).to eq('9393493')
@@ -28,7 +30,7 @@ RSpec.describe "CRUD_Item_integration_tests", type: :system do
 
   it 'does not allow the user to create an item with invalid inputs' do
     visit root_path
-    click_on "Add Item"
+    click_on 'Add Item'
 
     fill_in 'Name', with: '' # Leaving it blank to trigger validation error
     click_on 'Create Item'
@@ -52,9 +54,9 @@ RSpec.describe "CRUD_Item_integration_tests", type: :system do
   #   expect(updated_item.name).to eq('Updated Laptop')
   # end
 
-
   it 'allows the user to delete an item' do
-    item = Item.create!(name: 'Unwanted Laptop', description: 'A very unwanted laptop', serial_number: '7654321', available: true)
+    item = Item.create!(name: 'Unwanted Laptop', description: 'A very unwanted laptop', serial_number: '7654321',
+                        available: true)
 
     visit item_path(item)
     click_on 'Delete this item'
@@ -66,7 +68,8 @@ RSpec.describe "CRUD_Item_integration_tests", type: :system do
   end
 
   it 'allows the user to view an item' do
-    item = Item.create!(name: 'Viewable Laptop', description: 'A very viewable laptop', serial_number: '123456789',  available: true)
+    item = Item.create!(name: 'Viewable Laptop', description: 'A very viewable laptop', serial_number: '123456789',
+                        available: true)
 
     visit item_path(item)
 

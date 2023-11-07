@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMaintenanceItems < ActiveRecord::Migration[7.0]
   def change
     create_table :maintenance_items do |t|

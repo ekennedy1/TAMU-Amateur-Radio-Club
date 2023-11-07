@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AdminController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_admin
@@ -30,8 +32,8 @@ class AdminController < ApplicationController
   private
 
   def ensure_admin
-    unless current_user && current_user.admin?
-      redirect_to root_path, alert: "Access denied!"
-    end
+    return if current_user&.admin?
+
+    redirect_to root_path, alert: 'Access denied!'
   end
 end
