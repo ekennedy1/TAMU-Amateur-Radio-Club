@@ -3,6 +3,30 @@ require 'rails_helper'
 RSpec.describe ItemsController, type: :controller do
   render_views
 
+  let(:user) do
+    User.create!(
+      fname: 'First',
+      lname: 'Last',
+      email: 'test@example.com',
+      password: 'password123',
+      role: 'member'
+    )
+  end
+
+  before(:each) do
+    sign_in user
+  end
+
+  describe "GET #member_items" do
+    it "assigns all available items to @items and renders the member_items template" do
+      item = Item.create!(name: "Test Item", serial_number: "12345", description: "Test Description", available: true)
+      get :member_items
+      expect(assigns(:items)).to match_array([item])
+      expect(response).to render_template(:member_items)
+    end
+  end
+
+
   describe "GET #index" do
 
     it "assigns all items to @items and renders the index template" do
@@ -35,7 +59,7 @@ RSpec.describe ItemsController, type: :controller do
       end
     end
   end
-  
+
   #Testing search functionality on member inventory page
   describe "Get #member_items" do
 
@@ -72,7 +96,7 @@ RSpec.describe ItemsController, type: :controller do
       expect(response).to render_template(:show)
     end
   end
-  
+
   describe "GET #new" do
     it "assigns a new item to @item and renders the new template" do
       get :new
@@ -80,7 +104,7 @@ RSpec.describe ItemsController, type: :controller do
       expect(response).to render_template(:new)
     end
   end
-  
+
   describe "POST #create" do
     context "with valid attributes" do
       it "creates a new item and redirects to the item's page with a notice" do
@@ -121,7 +145,7 @@ RSpec.describe ItemsController, type: :controller do
       expect(flash[:notice]).to eq("Item was successfully removed.")
     end
   end
-  
+
   #tests for import / export csv function
 
   #testing export function
