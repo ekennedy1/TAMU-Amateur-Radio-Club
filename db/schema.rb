@@ -66,7 +66,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_180331) do
     t.boolean "approved"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-
   end
 
   create_table "users", force: :cascade do |t|
