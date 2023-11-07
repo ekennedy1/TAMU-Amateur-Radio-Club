@@ -1,8 +1,6 @@
-<%= link_to("Back to Inventory", items_path, class: 'back-link') %>
-
-<div class="items delete">
+<div class="items delete d-flex flex-column align-items-center text-center">
   <h2>Delete Item</h2>
-
+  <br>
   <%= form_for(@item, method: 'delete') do |f| %>
 
     <p>Are you sure you want to permanently delete this item?</p>
@@ -13,4 +11,6 @@
     </div>
 
   <% end %>
+  <br>
+  <%= link_to("Back to Inventory", admin_items_path, class: 'btn btn-secondary btn-sm text-white') %>
 </div>

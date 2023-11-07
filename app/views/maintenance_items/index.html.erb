@@ -1,14 +1,14 @@
 <p style="color: green"><%= notice %></p>
+<div class="container">
+  <h1>Maintenance items</h1>
+  <div id="maintenance_items">
+    <% @maintenance_items.each do |maintenance_item| %>
+      <%= render maintenance_item %>
+      <p>
+        <%= link_to "Show this maintenance item", maintenance_item %>
+      </p>
+    <% end %>
+  </div>
 
-<h1>Maintenance items</h1>
-
-<div id="maintenance_items">
-  <% @maintenance_items.each do |maintenance_item| %>
-    <%= render maintenance_item %>
-    <p>
-      <%= link_to "Show this maintenance item", maintenance_item %>
-    </p>
-  <% end %>
+  <%= link_to "New maintenance item", new_maintenance_item_path %>
 </div>
-
-<%= link_to "New maintenance item", new_maintenance_item_path %>

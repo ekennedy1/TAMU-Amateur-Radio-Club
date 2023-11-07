@@ -79,11 +79,12 @@ class ItemsController < ApplicationController
       @item.update_attribute(:available, false)
 
       # Create a new Transaction entry with the item's serial_number
-      Transaction.create(email: current_user.email, serial_number: @item.serial_number)
 
-      redirect_to items_path, notice: "Item checked out and transaction created."
+      Transaction.create!(email: current_user.email, serial_number: @item.serial_number, approved: false)
+      
+      redirect_to member_items_path, notice: "Item checked out and transaction created."
     else
-      redirect_to items_path, alert: "Item is already checked out."
+      redirect_to member_items_path, alert: "Item is already checked out."
     end
   end
 
@@ -121,12 +122,12 @@ class ItemsController < ApplicationController
         item.update!(item_hash)
       end
 
-      redirect_to items_path, notice: "Items imported successfully!"
+      redirect_to admin_items_path, notice: "Items imported successfully!"
     else
-      redirect_to items_path, alert: "Please upload a CSV file."
+      redirect_to admin_items_path, alert: "Please upload a CSV file."
     end
   rescue ActiveRecord::RecordInvalid => e
-    redirect_to items_path, alert: "There was an issue with importing items. Error: #{e.message}"
+    redirect_to admin_items_path, alert: "There was an issue with importing items. Error: #{e.message}"
   end
 
   private

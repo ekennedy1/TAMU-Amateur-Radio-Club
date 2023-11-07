@@ -14,14 +14,30 @@ pre {
   font-size: 11px; }
 
 a {
-  color: #000; }
+  color: #000; 
+  padding: 2px 2px;
+}
 
-a:visited {
-  color: #666; }
+a:not(.nav-link):not(.btn):hover{
+  color:#000;
+  background-color: lightgray;
+  border-radius: 6px;
+}
 
-a:hover {
-  color: #fff;
-  background-color: #000; }
+.nav-item {
+  font-size: medium;
+  text-align: center;
+  padding: auto;
+}
+.nav-link {
+  color: white;
+
+}
+.nav-item:hover {
+  color: white;
+  background-color: #6c0c0c; 
+  border-radius: 6px;
+}
 
 th {
   padding-bottom: 5px; }
