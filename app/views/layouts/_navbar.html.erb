@@ -38,6 +38,9 @@
             <%= link_to "Admin Dashboard", admin_path, class: "nav-link" %>
           </li>
         <% end %>
+        <li class="nav-item">
+            <%= link_to "Help", help_path, class: 'nav-link' %>
+       </li>
       </ul>
       <ul class="navbar-nav">
         <%= render 'users/session_manager' %>
