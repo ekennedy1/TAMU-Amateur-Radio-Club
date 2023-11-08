@@ -21,6 +21,27 @@ class AdminController < ApplicationController
     end
   end
 
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+
+    # Remove password params if they are blank
+    if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
+      params[:user].delete(:password)
+      params[:user].delete(:password_confirmation)
+    end
+
+    if @user.update(user_params)
+      redirect_to admin_users_path, notice: 'User was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+
   def user_params
     params.require(:user).permit(:fname, :lname, :email, :role, :password, :password_confirmation, :callsign)
   end
