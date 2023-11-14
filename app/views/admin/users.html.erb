@@ -1,34 +1,47 @@
-<div class="container">
+<div class="container my-4">
   <h1 class="text-center">Admin Dashboard</h1>
   <%= render "admin/nav_links" %>
-  <br>
-  <button type="button" class="btn btn-primary mb-4" data-bs-toggle="collapse" data-bs-target="#newUserForm">
+
+<!-- Button trigger for New User Form -->
+<div class="mb-3">
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#newUserForm">
     Create a New User
   </button>
-  <div class="collapse" id="newUserForm">
-    <%= render 'create_form', user: User.new %>
-  </div>
+</div>
 
-  <table class="table table-light table-striped">
-    <thead>
-      <tr>
-        <th scope="col">First Name</th>
-        <th scope="col">Last Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">Role</th>
-        <th scope="col">Callsign</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users.each do |user| %>
+<!-- Collapsible New User Form -->
+<div class="collapse" id="newUserForm">
+  <!-- Form content here -->
+  <%= render 'create_form', user: User.new %>
+</div>
+
+  <div class="table-responsive">
+    <table class="table table-light table-striped">
+      <thead class="table-dark">
         <tr>
-          <td><%= user.fname %></td>
-          <td><%= user.lname %></td>
-          <td><%= user.email %></td>
-          <td><%= user.role %></td>
-          <td><%= user.callsign %></td>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Role</th>
+          <th scope="col">Callsign</th>
+          <th scope="col">Actions</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.fname %></td>
+            <td><%= user.lname %></td>
+            <td><%= user.email %></td>
+            <td><%= user.role %></td>
+            <td><%= user.callsign %></td>
+            <td>
+              <%= link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-info btn-sm' %>
+              <!-- Consider adding a delete button if needed -->
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

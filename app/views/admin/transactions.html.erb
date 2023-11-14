@@ -1,33 +1,42 @@
-<div class="container">
+<div class="container my-4">
   <h1 class="text-center">Admin Dashboard</h1>
   <%= render "admin/nav_links" %>
-  <br>
-  <table class="table table-light table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Email</th>
-        <th scope="col">Serial Number</th>
-        <th scope="col">Approved</th>
-        <th scope="col">Checked Out At</th>
-        <th scope="col">Approved At</th>
-        <th scope="col">Approve?</th>
-        <th scope="col">Check In</th>
-        <th scope="col">Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @transactions.each do |transaction| %>
+
+  <!-- Transactions Table -->
+  <div class="table-responsive mt-3">
+    <table class="table table-light table-striped">
+      <thead class="table-dark">
         <tr>
-          <th><%= transaction.email %></th>
-          <td><%= transaction.serial_number %></td>
-          <td><%= transaction.approved ? 'Yes' : 'No' %></td>
-          <td><%= transaction.created_at %></td>
-          <td><%= transaction.updated_at %></td>
-          <td><%= link_to 'Approve', approve_transaction_path(transaction), method: :put, class: "button" %></td>
-          <td><%= link_to 'Check_in', check_in_transaction_path(transaction), method: :put, class: "button" %></td>
-          <td><%= link_to "Delete", delete_transaction_path(transaction) %>
+          <th scope="col">Email</th>
+          <th scope="col">Serial Number</th>
+          <th scope="col">Approved</th>
+          <th scope="col">Checked Out At</th>
+          <th scope="col">Approved At</th>
+          <th scope="col">Approve</th>
+          <th scope="col">Check In</th>
+          <th scope="col">Delete</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @transactions.each do |transaction| %>
+          <tr>
+            <td><%= transaction.email %></td>
+            <td><%= transaction.serial_number %></td>
+            <td><%= transaction.approved ? 'Yes' : 'No' %></td>
+            <td><%= l(transaction.checked_out_at, format: :short) if transaction.checked_out_at %></td>
+            <td><%= l(transaction.approved_at, format: :short) if transaction.approved_at %></td>
+            <td>
+              <%= link_to 'Approve', approve_transaction_path(transaction), method: :put, class: 'btn btn-success btn-sm' %>
+            </td>
+            <td>
+              <%= link_to 'Check In', check_in_transaction_path(transaction), method: :put, class: 'btn btn-warning btn-sm' %>
+            </td>
+            <td>
+              <%= link_to 'Delete', delete_transaction_path(transaction), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

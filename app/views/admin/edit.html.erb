@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h2 class="mb-4 text-center">Edit User</h2>
+      <%= form_for(@user, url: admin_user_path(@user), method: :patch, html: { class: 'needs-validation', novalidate: true }) do |f| %>
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <!-- First Name Field -->
+              <div class="col-md-6 mb-3">
+                <%= f.label :fname, "First Name" %>
+                <%= f.text_field :fname, class: 'form-control', required: true %>
+                <div class="invalid-feedback">
+                  Please provide a first name.
+                </div>
+              </div>
+              <!-- Last Name Field -->
+              <div class="col-md-6 mb-3">
+                <%= f.label :lname, "Last Name" %>
+                <%= f.text_field :lname, class: 'form-control', required: true %>
+                <div class="invalid-feedback">
+                  Please provide a last name.
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- Email Field -->
+              <div class="col-md-6 mb-3">
+                <%= f.label :email, "Email" %>
+                <%= f.email_field :email, class: 'form-control', required: true %>
+                <div class="invalid-feedback">
+                  Please provide a valid email address.
+                </div>
+              </div>
+              <!-- Role Field -->
+              <div class="col-md-6 mb-3">
+                <%= f.label :role, "Role" %>
+                <%= f.select :role, [['Member', 'Member'], ['Admin', 'Admin']], {}, { class: 'form-select', required: true } %>
+                <div class="invalid-feedback">
+                  Please select a role.
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- Callsign Field (optional) -->
+              <div class="col-md-6 mb-3">
+                <%= f.label :callsign, "Callsign (optional)" %>
+                <%= f.text_field :callsign, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="row">
+              <!-- Password Field -->
+              <div class="col-md-6 mb-3">
+                <%= f.label :password, "Password (leave blank if you don't want to change it)" %>
+                <%= f.password_field :password, class: 'form-control' %>
+              </div>
+              <!-- Password Confirmation Field -->
+              <div class="col-md-6 mb-3">
+                <%= f.label :password_confirmation, "Confirm Password" %>
+                <%= f.password_field :password_confirmation, class: 'form-control' %>
+              </div>
+            </div>
+            <!-- Submit Button -->
+             <div class="text-center mt-4">
+              <%= f.submit 'Update User', class: 'btn btn-primary me-2' %>
+              <%= link_to 'Back to Users', admin_users_path, class: 'btn btn-secondary' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
