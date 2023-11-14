@@ -23,8 +23,8 @@
             <td><%= transaction.email %></td>
             <td><%= transaction.serial_number %></td>
             <td><%= transaction.approved ? 'Yes' : 'No' %></td>
-            <td><%= l(transaction.checked_out_at, format: :short) if transaction.checked_out_at %></td>
-            <td><%= l(transaction.approved_at, format: :short) if transaction.approved_at %></td>
+            <td><%= transaction.created_at %></td>
+            <td><%= transaction.updated_at %></td>
             <td>
               <%= link_to 'Approve', approve_transaction_path(transaction), method: :put, class: 'btn btn-success btn-sm' %>
             </td>
