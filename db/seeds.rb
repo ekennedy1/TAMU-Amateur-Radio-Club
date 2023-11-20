@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
@@ -26,7 +28,7 @@ User.create!(
   callsign: 'KL4LJ' # Example callsign for Member
 )
 
-callsigns = ['KI5YBE', 'KT5KMF', 'WG1GEM'] # An array of example callsigns
+callsigns = %w[KI5YBE KT5KMF WG1GEM] # An array of example callsigns
 3.times do |x|
   User.create!(
     email: "test#{x}@gmail.com",
@@ -44,6 +46,8 @@ end
 # end
 
 10.times do |x|
-  item = Item.create!(name: "Item #{x}", serial_number: rand.to_s[2..11], description: "Description of item #{x}" , available: true)
-  item.image.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'placeholderRadio.png')), filename: 'placeholderRadio.png', content_type: 'image/png')
+  item = Item.create!(name: "Item #{x}", serial_number: rand.to_s[2..11], description: "Description of item #{x}",
+                      available: true)
+  item.image.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'placeholderRadio.png')),
+                    filename: 'placeholderRadio.png', content_type: 'image/png')
 end
