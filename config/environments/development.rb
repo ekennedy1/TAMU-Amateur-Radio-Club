@@ -75,6 +75,7 @@ Rails.application.configure do
   # ENV['GOOGLE_OAUTH_CLIENT_SECRET'] = Rails.application.credentials.google_oauth[:client_secret]
   ENV['GOOGLE_CLIENT_SECRET'] =
     ENV['GOOGLE_CLIENT_SECRET'] || Rails.application.credentials.google_oauth[:client_secret]
+  ENV['GOOGLE_CLIENT_SECRET'] = ENV['GOOGLE_CLIENT_SECRET'] || Rails.application.credentials.google_oauth[:client_secret]
   ENV['GOOGLE_CLIENT_ID'] = ENV['GOOGLE_CLIENT_ID'] || Rails.application.credentials.google_oauth[:client_id]
 
   config.action_mailer.delivery_method = :smtp
