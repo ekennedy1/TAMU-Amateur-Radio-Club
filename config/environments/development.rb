@@ -1,4 +1,6 @@
-require "active_support/core_ext/integer/time"
+# frozen_string_literal: true
+
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -19,13 +21,13 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join("tmp/caching-dev.txt").exist?
+  if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.to_i}"
+      'Cache-Control' => "public, max-age=#{2.days.to_i}"
     }
   else
     config.action_controller.perform_caching = false
@@ -71,7 +73,8 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
   # ENV['GOOGLE_OAUTH_CLIENT_ID'] = Rails.application.credentials.google_oauth[:client_id]
   # ENV['GOOGLE_OAUTH_CLIENT_SECRET'] = Rails.application.credentials.google_oauth[:client_secret]
-  ENV['GOOGLE_CLIENT_SECRET'] = ENV['GOOGLE_CLIENT_SECRET'] || Rails.application.credentials.google_oauth[:client_secret]
+  ENV['GOOGLE_CLIENT_SECRET'] =
+    ENV['GOOGLE_CLIENT_SECRET'] || Rails.application.credentials.google_oauth[:client_secret]
   ENV['GOOGLE_CLIENT_ID'] = ENV['GOOGLE_CLIENT_ID'] || Rails.application.credentials.google_oauth[:client_id]
 
   config.action_mailer.delivery_method = :smtp
@@ -79,14 +82,14 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.smtp_settings = {
-    address:         'smtp.gmail.com',
-    port:            587,
-    domain:          "gmail.com",
-    user_name:       'w5ac.notifications@gmail.com',
-    password:        ENV['MAILER_PASSWORD'],
-    authentication:  'plain',
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'gmail.com',
+    user_name: 'w5ac.notifications@gmail.com',
+    password: ENV['MAILER_PASSWORD'],
+    authentication: 'plain',
     enable_starttls: true,
-    open_timeout:    5,
-    read_timeout:    5 }
-
+    open_timeout: 5,
+    read_timeout: 5
+  }
 end

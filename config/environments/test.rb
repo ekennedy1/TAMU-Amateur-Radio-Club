@@ -1,4 +1,6 @@
-require "active_support/core_ext/integer/time"
+# frozen_string_literal: true
+
+require 'active_support/core_ext/integer/time'
 
 # The test environment is used exclusively to run your application's
 # test suite. You never need to work with it otherwise. Remember that
@@ -61,13 +63,14 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
   config.action_mailer.smtp_settings = {
-    address:         'smtp.gmail.com',
-    port:            587,
-    domain:          "gmail.com",
-    user_name:       'w5ac.notifications@gmail.com',
-    password:        ENV['MAILER_PASSWORD'],
-    authentication:  'plain',
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'gmail.com',
+    user_name: 'w5ac.notifications@gmail.com',
+    password: ENV['MAILER_PASSWORD'],
+    authentication: 'plain',
     enable_starttls: true,
-    open_timeout:    5,
-    read_timeout:    5 }
+    open_timeout: 5,
+    read_timeout: 5
+  }
 end

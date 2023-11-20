@@ -1,10 +1,11 @@
-class ItemsController < ApplicationController
+# frozen_string_literal: true
 
+class ItemsController < ApplicationController
   # Display all items
   def index
-    #Search Functionality
-    #If search is empty, return all items
-    #Else, return items that contain the search string
+    # Search Functionality
+    # If search is empty, return all items
+    # Else, return items that contain the search string
     @items = Item.search(params[:search])
   end
 
@@ -40,9 +41,9 @@ class ItemsController < ApplicationController
     # Save the new item and redirect or render errors as necessary
     respond_to do |format|
       if @item.save
-        format.html { redirect_to item_url(@item), notice: "Item was successfully created." }
+        format.html { redirect_to item_url(@item), notice: 'Item was successfully created.' }
         format.json { render :show, status: :created, location: @item }
-        flash[:notice] = "Successfully created item"
+        flash[:notice] = 'Successfully created item'
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @item.errors, status: :unprocessable_entity }
@@ -51,9 +52,7 @@ class ItemsController < ApplicationController
   end
 
   # Update an item's details
-  def update
-  end
-
+  def update; end
 
   # Confirm deletion of an item
   def delete
@@ -66,7 +65,7 @@ class ItemsController < ApplicationController
     @item.destroy
 
     respond_to do |format|
-      format.html { redirect_to items_url, notice: "Item was successfully removed." }
+      format.html { redirect_to items_url, notice: 'Item was successfully removed.' }
       format.json { head :no_content }
     end
   end
@@ -81,18 +80,18 @@ class ItemsController < ApplicationController
       # Create a new Transaction entry with the item's serial_number
 
       Transaction.create!(email: current_user.email, serial_number: @item.serial_number, approved: false)
-      
-      redirect_to member_items_path, notice: "Item checked out and transaction created."
+
+      redirect_to member_items_path, notice: 'Item checked out and transaction created.'
     else
-      redirect_to member_items_path, alert: "Item is already checked out."
+      redirect_to member_items_path, alert: 'Item is already checked out.'
     end
   end
 
   # Display all items that are available
   def member_items
-    #Search Functionality
-    #If search is empty, return all items with available set to True (This is the case for member inventory)
-    #Otherwise, only return items that contains the search string and is available
+    # Search Functionality
+    # If search is empty, return all items with available set to True (This is the case for member inventory)
+    # Otherwise, only return items that contains the search string and is available
     @items = Item.search(params[:search]).where(available: true)
   end
 
@@ -111,20 +110,20 @@ class ItemsController < ApplicationController
       csv = CSV.parse(csv_text, headers: true)
       csv.each do |row|
         item_hash = row.to_hash
-        item_hash["available"] = case item_hash["available"].downcase.strip
+        item_hash['available'] = case item_hash['available'].downcase.strip
                                  when 'true', 't', '1'
                                    true
                                  else
                                    false # Default value when it's not explicitly true.
                                  end
-        
-        item = Item.find_or_create_by(id: item_hash["id"])
+
+        item = Item.find_or_create_by(id: item_hash['id'])
         item.update!(item_hash)
       end
 
-      redirect_to admin_items_path, notice: "Items imported successfully!"
+      redirect_to admin_items_path, notice: 'Items imported successfully!'
     else
-      redirect_to admin_items_path, alert: "Please upload a CSV file."
+      redirect_to admin_items_path, alert: 'Please upload a CSV file.'
     end
   rescue ActiveRecord::RecordInvalid => e
     redirect_to admin_items_path, alert: "There was an issue with importing items. Error: #{e.message}"
@@ -132,8 +131,8 @@ class ItemsController < ApplicationController
 
   private
 
-    # Strong parameters for item to prevent mass-assignment vulnerabilities
-    def item_params
-      params.require(:item).permit(:name, :serial_number, :description, :image, :available)
-    end
+  # Strong parameters for item to prevent mass-assignment vulnerabilities
+  def item_params
+    params.require(:item).permit(:name, :serial_number, :description, :image, :available)
+  end
 end

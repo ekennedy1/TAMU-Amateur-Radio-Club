@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   get 'pages/help'
   get 'users/index'
 
   resources :maintenance_items
   # if user is not an admin, going to /admins will give 404 error
-  authenticated :user, -> (user) { user.admin? } do
+  authenticated :user, ->(user) { user.admin? } do
     get 'admin', to: 'admin#index'
     get 'admin/users'
     get 'admin/transactions'
@@ -23,7 +25,7 @@ Rails.application.routes.draw do
 
   put 'items/:id/checkout', to: 'items#checkout', as: 'checkout_item'
 
-  get '/items/export', to:'items#export'
+  get '/items/export', to: 'items#export'
   post 'items/import', to: 'items#import', as: 'import_items'
 
   resources :items, except: [:index] do
@@ -31,7 +33,7 @@ Rails.application.routes.draw do
       get :delete
       put 'checkout'
       get 'checkout'
-      #post :button_action
+      # post :button_action
     end
   end
 
@@ -50,7 +52,6 @@ Rails.application.routes.draw do
   get 'member-items', to: 'items#member_items'
   get 'transactions', to: 'transactions#index'
   get 'help', to: 'pages#help', as: 'help'
-  
-  resources :consumables
 
+  resources :consumables
 end
