@@ -1,0 +1,29 @@
+<%= form_with(model: consumable, local: true) do |form| %>
+  <% if consumable.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(consumable.errors.count, "error") %> prohibited this consumable from being saved:</h4>
+      <ul>
+        <% consumable.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :quantity_remaining %>
+    <%= form.number_field :quantity_remaining, class: "form-control" %>
+  </div>
+
+  <%= form.submit class: "btn btn-primary" %>
+<% end %>
