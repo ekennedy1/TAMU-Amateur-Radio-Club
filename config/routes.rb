@@ -10,7 +10,10 @@ Rails.application.routes.draw do
     get 'admin', to: 'admin#index'
     get 'admin/users'
     get 'admin/transactions'
-    patch 'admin/users/:id', to: 'admin#update', as: 'admin/user'
+    post 'admin/users', to: 'admin#create', as: :create_admin_user
+    get 'admin/users/:id/edit', to: 'admin#edit', as: 'edit_admin_user'
+    patch 'admin/users/:id', to: 'admin#update', as: 'admin_user'
+    delete 'admin/users/:id', to: 'admin#destroy', as: :delete_admin_user
     get 'items/index', as: :admin_items
   end
 

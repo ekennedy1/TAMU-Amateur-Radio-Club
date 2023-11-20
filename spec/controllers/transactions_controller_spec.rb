@@ -4,10 +4,24 @@
 require 'rails_helper'
 
 RSpec.describe TransactionsController, type: :controller do
-  let(:valid_attributes) do
-    { email: 'test@example.com', serial_number: '123456' }
+ 
+  let(:user) do
+    User.create!(
+      fname: 'First',
+      lname: 'Last',
+      email: 'test@gmail.com',
+      password: 'password123',
+      role: 'member'
+    )
   end
 
+  before(:each) do
+    sign_in user
+  end
+
+  let(:valid_attributes) do
+    { email: 'test@example.com', serial_number: '123456' }
+  end 
   let(:invalid_attributes) do
     { email: nil, serial_number: nil }
   end
@@ -63,6 +77,9 @@ RSpec.describe TransactionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     it 'destroys the requested transaction' do
+ 
+      Item.create!(name: 'Test Item', serial_number: '12345', description: 'Test Description', available: true)
+ 
       transaction = Transaction.create! valid_attributes
       expect do
         delete :destroy, params: { id: transaction.to_param }
