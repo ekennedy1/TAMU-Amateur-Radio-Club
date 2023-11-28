@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
+ 
   include Devise::Test::IntegrationHelpers
 
   let(:admin) do
@@ -18,7 +19,7 @@ RSpec.describe 'Users', type: :request do
   before(:each) do
     sign_in admin
   end
-
+ 
   describe 'GET /index' do
     it 'returns http success' do
       get '/users/index'

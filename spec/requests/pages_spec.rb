@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Pages', type: :request do
+ 
   include Devise::Test::IntegrationHelpers
 
   let(:admin) do
@@ -17,7 +18,7 @@ RSpec.describe 'Pages', type: :request do
 
   before(:each) do
     sign_in admin
-  end
+  end 
   describe 'GET /help' do
     it 'returns http success' do
       get '/pages/help'

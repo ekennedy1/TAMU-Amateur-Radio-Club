@@ -20,6 +20,7 @@ class AdminController < ApplicationController
     end
   end
 
+ 
   def edit
     @user = User.find(params[:id])
   end
@@ -46,6 +47,7 @@ class AdminController < ApplicationController
     params.require(:user).permit(allowed_params)
   end
 
+ 
   def transactions
     @transactions = Transaction.all
   end

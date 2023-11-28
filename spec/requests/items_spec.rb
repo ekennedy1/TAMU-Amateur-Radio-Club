@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Items', type: :request do
+ 
   include Devise::Test::IntegrationHelpers
   let(:item) { Item.create!(name: 'test', description: 'test', serial_number: '123456', available: true) }
 
@@ -19,17 +20,22 @@ RSpec.describe 'Items', type: :request do
   before(:each) do
     sign_in admin
   end
-
+ 
   describe 'GET /new' do
     it 'returns http success' do
       get '/items/new'
       expect(response).to have_http_status(:success)
     end
   end
-
+ 
+  describe 'GET /index' do
+    it 'returns http success' do
+      get '/items'
+ 
   describe 'GET /admin/items' do
     it 'returns http success' do
       get admin_items_path
+ 
       expect(response).to have_http_status(:success)
     end
   end

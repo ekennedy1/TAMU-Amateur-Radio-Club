@@ -15,6 +15,7 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe '/maintenance_items', type: :request do
+ 
   include Devise::Test::IntegrationHelpers
 
   let(:admin) do
@@ -30,7 +31,7 @@ RSpec.describe '/maintenance_items', type: :request do
   before(:each) do
     sign_in admin
   end
-
+ 
   # This should return the minimal set of attributes required to create a valid
   # MaintenanceItem. As you add validations to MaintenanceItem, be sure to
   # adjust the attributes here as well.

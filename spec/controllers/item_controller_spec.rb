@@ -41,7 +41,7 @@ RSpec.describe ItemsController, type: :controller do
       expect(response).to render_template(:member_items)
     end
   end
-
+ 
   describe 'GET #index' do
     it 'assigns all items to @items and renders the index template' do
       Item.create(name: 'Test Item', serial_number: '12345', description: 'Test Description', available: true)
@@ -191,9 +191,11 @@ RSpec.describe ItemsController, type: :controller do
   end
 
   # testing import function
+ 
   context 'as an admin user' do
     before(:each) do
       sign_in admin
+ 
     end
     describe 'POST #import' do
       let(:csv_file) { fixture_file_upload('items.csv', 'text/csv') }
@@ -216,16 +218,16 @@ RSpec.describe ItemsController, type: :controller do
           raise ActiveRecord::Rollback
         end
       end
-
+ 
       context 'when csv file is missing' do
         it 'gives an error' do
           post :import
 
           expect(response).to redirect_to(admin_items_path)
           expect(flash[:alert]).to eq('Please upload a CSV file.')
-        end
+        end 
       end
-
+ 
       context 'when csv file is missing columns' do
         let(:csv_file) { fixture_file_upload('invalid_items.csv', 'test/csv') }
 
@@ -238,6 +240,6 @@ RSpec.describe ItemsController, type: :controller do
         end
       end
     end
-  end
+  end 
   #  write tests for edit
 end

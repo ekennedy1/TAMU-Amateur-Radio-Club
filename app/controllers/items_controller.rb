@@ -52,7 +52,14 @@ class ItemsController < ApplicationController
   end
 
   # Update an item's details
-  def update; end
+  def update
+    @item = Item.find(params[:id])
+    if @item.update(item_params)
+      redirect_to admin_items_path, notice: 'Item was successfully updated.'
+    else
+      render :edit
+    end
+  end
 
   # Confirm deletion of an item
   def delete
@@ -65,7 +72,7 @@ class ItemsController < ApplicationController
     @item.destroy
 
     respond_to do |format|
-      format.html { redirect_to items_url, notice: 'Item was successfully removed.' }
+      format.html { redirect_to admin_items_url, notice: 'Item was successfully removed.' }
       format.json { head :no_content }
     end
   end
